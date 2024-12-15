@@ -1,0 +1,459 @@
+\documentclass[a4paper,12pt,UTF8]{ctexart}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage[arrow,matrix]{xy}
+\usepackage{amsmath,amssymb,amscd,bm,bbm,amsthm,mathrsfs}
+\usepackage{amsmath,amscd}
+\usepackage{amsfonts,amssymb}
+\usepackage{xypic}
+\usepackage{indentfirst}
+\usepackage{diagbox}
+\usepackage{graphicx}
+\usepackage{tcolorbox}
+\usepackage{color}
+\usepackage{geometry}
+\usepackage[normalem]{ulem}
+\geometry{left=1.5cm,right=1.5cm,top=2cm,bottom=1.5cm}
+
+
+\def\d{\textup{d}}
+
+\theoremstyle{definition}
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lem}{Lemma}[section]
+\newtheorem{prop}{Proposition}[section]
+\newtheorem{cor}{Corollary}[section]
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}[section]
+\newtheorem{exmp}{Example}[section]
+\newtheorem*{ack}{致谢}
+
+\theoremstyle{Remark}
+\newtheorem{rem}{Remark}[section]
+
+\renewcommand{\qedsymbol}{$\squre$}
+\renewcommand\baselinestretch{1.25}
+
+\tcbuselibrary{skins}
+
+
+
+\NewTotalTColorBox[auto counter]{\Definition}{ +m }{ 
+	notitle,
+	colback=green!20!white,
+	frame hidden,
+	boxrule=0pt,
+	enhanced,
+	sharp corners,
+	borderline west={4pt}{0pt}{green!80!black},
+}{
+	\textcolor{green!60!black}{
+		\sffamily
+		\textbf{Definition~\thetcbcounter.}%
+	}%
+	#1
+}
+
+\NewTotalTColorBox[auto counter]{\Lemma}{ +m }{ 
+	notitle,
+	colback=red!10!white,
+	frame hidden,
+	boxrule=0pt,
+	enhanced,
+	sharp corners,
+	borderline west={4pt}{0pt}{red!100!black},
+}{
+	\textcolor{red!90!black}{
+		\sffamily
+		\textbf{Lemma~\thetcbcounter.}%
+	}%
+	#1
+}
+
+\NewTotalTColorBox[auto counter]{\Example}{ +m }{ 
+	notitle,
+	colback=black!5!white,
+	frame hidden,
+	boxrule=0pt,
+	enhanced,
+	sharp corners,
+	borderline west={4pt}{0pt}{black!50!black},
+}{
+	\textcolor{black!50!black}{
+		\sffamily
+		\textbf{Example~\thetcbcounter.}%
+	}%
+	#1
+}
+
+\NewTotalTColorBox[auto counter]{\Proposition}{ +m }{ 
+	notitle,
+	colback=blue!5!white,
+	frame hidden,
+	boxrule=0pt,
+	enhanced,
+	sharp corners,
+	borderline west={4pt}{0pt}{blue!80!black},
+}{
+	\textcolor{blue!80!black}{
+		\sffamily
+		\textbf{Proposition~\thetcbcounter.}%
+	}%
+	#1
+}
+
+\NewTotalTColorBox[auto counter]{\Corollary}{ +m }{ 
+	notitle,
+	colback=blue!5!white,
+	frame hidden,
+	boxrule=0pt,
+	enhanced,
+	sharp corners,
+	borderline west={4pt}{0pt}{blue!50!black},
+}{
+	\textcolor{blue!50!black}{
+		\sffamily
+		\textbf{Corollary~\thetcbcounter.}%
+	}%
+	#1
+}
+
+\NewTotalTColorBox[auto counter]{\Theorem}{ +m }{ 
+	notitle,
+	colback=red!10!white,
+	frame hidden,
+	boxrule=0pt,
+	enhanced,
+	sharp corners,
+	borderline west={4pt}{0pt}{red!100!black},
+}{
+	\textcolor{red!90!black}{
+		\sffamily
+		\textbf{Theorem~\thetcbcounter.}%
+	}%
+	#1
+}
+
+
+
+
+\begin{document}
+	
+	
+	\section{Chern-Weil Homommorphism}
+	
+	
+	\Definition{
+	Let $G$ be a Lie group with its Lie algebra $\mathfrak{g}$, a polynomial $f:\mathfrak{g}\rightarrow \mathbb{K}$ is called an \textbf{$\mathrm{Ad}(G)$-invariant polynomial} if for $\forall g\in G$ and $\forall X\in \mathfrak{g}$, we have
+	$$f(\mathrm{Ad}(g)X)=f(X)$$
+	the set of all such polynomials will be denoted as $\mathrm{Inv}(G)$. If $f\in \mathrm{Inv}(G)$ is of degree $k$, we will denote it as $f\in \mathrm{Inv}^{k}(G)$, hence
+	$$\mathrm{Inv}(G)=\bigoplus_{k=0}^{\infty}\mathrm{Inv}^{k}(G)$$
+	}
+	
+	\textcolor{blue}{\textbf{\underline{Remark}}}: For a vector space $V$, by \textbf{a polynomial of degree $k$ on $V$}, we mean an element $f\in \mathrm{Sym}^{k}(V^{*})$, here $\mathrm{Sym}$ means the symmetric tensor. So if $\{e_{1},e_{2},\dots,e_{n}\}\}$ is a basis of $V$ and $\{e^{1},e^{2},\dots,e^{n}\}\}$ the dual basis of $V^{*}$, $f\in \mathrm{Sym}^{k}(V^{*})$ may be expressed as
+	$$f\triangleq \sum_{1\leq i_{1},i_{2},\dots,i_{k}\leq n} a_{i_{1}i_{2},\dots i_{k}}e^{i_{1}}e^{i_{2}}\dots e^{i_{k}}$$
+	
+	\hspace*{\fill}
+	
+	\Example{
+	Let $G=GL_{n}(\mathbb{C})$, then we know that the adjoint representation is given by
+	$$\mathrm{Ad}(g)X=gXg^{-1}~~~(\forall g\in GL_{n}(\mathbb{C}),\forall X\in \mathfrak{gl}_{n}(\mathbb{C}))$$
+	in which case $f\in \mathrm{Inv}(GL_{n}(\mathbb{C}))$ is refer to
+	$$f(gXg^{-1})=f(X)$$
+	}
+	
+	
+	\subsection{On Principal Bundles}
+	
+	\textcolor{brown}{\textbf{\underline{Recall}}}: Recall that for a principal $G$-bundle $\pi:P\longrightarrow M$, the connection on $P$ is a $\mathfrak{g}$-valued 1 form $\omega\in \Omega^{1}(P;\mathfrak{g})$ and the curvature $\Omega\in \Omega^{2}(P;\mathfrak{g})$ of the connection $\omega$ is given by $\Omega:=d\omega+\frac{1}{2}[\omega,\omega]$
+	which satisfies some properties (refer [1] or [3]).
+	
+	\hspace*{\fill}
+	
+	Let $\pi:P\longrightarrow M$ be a principal $G$-bundle, let $f:\mathfrak{g}\rightarrow \mathbb{K}$ be a polynomial of degree $k$, i.e., $f\in \mathrm{Sym}^{k}(\mathfrak{g}^{*})$. Take a basis $\{e_{1},\dots,e_{n}\}$ of $\mathfrak{g}$ and the dual basis $\{e^{1},\dots,e^{n}\}$ of $\mathfrak{g}^{*}$, then $f$ is given by
+	$$f\triangleq \sum_{I} a_{I}e^{i_{1}}e^{i_{2}}\dots e^{i_{k}}$$
+    where $I=(i_{1},i_{2},\dots,i_{k})$ with $1\leq i_{1},i_{2},\dots,i_{k}\leq n$. Now assume there is a given connection $\omega$ on $P$ and hence the curvature $\Omega$. So the curvature $\Omega$ is expressed as
+ 	$$\Omega\triangleq \sum_{i}\Omega^{i}\otimes e_{i}$$
+ 	then $f$ induces a $2k$-form $f(\Omega)\in \Omega^{2k}(P)$, which is defined as
+ 	$$f(\Omega):=\sum a_{I}\Omega^{i_{1}}\wedge \Omega^{i_{2}}\wedge\dots \wedge \Omega^{i_{k}}$$
+ 	
+ 	\textbf{Claim}: The $2k$-form $f(\Omega)$ defined above is independent of the choice of the basis $\{e_{i}\}_{i=1}^{n}$.
+ 	
+ 	Proof: Let $\{e_{i}\}_{i=1}^{n}$ and $\{u_{j}\}_{j=1}^{n}$ be two basis of $\mathfrak{g}$ and the dual basis $\{\alpha^{i}\}_{i=1}^{n}, \{\beta^{j}\}_{j=1}^{n}$ of $\mathfrak{g}^{*}$ respectively. Assume that w.r.t. these two basis
+ 	$$f\triangleq \sum a_{I}\alpha^{i_{1}}\alpha^{i_{2}}\dots \alpha^{i_{k}}$$
+ 	$$f\triangleq \sum b_{I}\beta^{i_{1}}\beta^{i_{2}}\dots \beta^{i_{k}}$$
+ 	and assume that
+ 	$$\Omega=\sum_{i}\Omega^{i}\otimes e_{i}=\sum_{j}\Psi^{j}\otimes u_{j}$$
+ 	We just need to prove $\sum a_{I}\Omega^{i_{1}}\wedge \Omega^{i_{2}}\wedge \dots\wedge \Omega^{i_{k}}=\sum b_{I}\Psi^{i_{1}}\wedge \Psi^{i_{2}}\wedge \dots \wedge \Psi^{i_{k}}$:\par
+	Suppose 
+	$$\beta^{j}=\sum a_{i}^{j}\alpha^{i}$$
+	note that $\Psi^{j}=\beta^{j}(\Omega)$ and $\omega^{i}=\alpha^{i}(\Omega)$, so we have
+	$$\Psi^{j}=\beta^{j}(\Omega)=\sum a^{j}_{i}\alpha^{i}(\Omega)=\sum a^{j}_{i}\Omega^{i}$$
+	therefore, we compute
+	$$f=\sum b_{I}\beta^{i_{1}}\beta^{i_{2}}\dots \beta^{i_{k}}=\sum b_{I}(a^{i_{1}}_{j_{1}}\alpha^{j_{1}})(a^{i_{2}}_{j_{2}}\alpha^{j_{2}})\dots (a^{i_{k}}_{j_{k}}\alpha^{j_{k}})$$ 
+	$$=\sum b_{I}a^{i_{1}}_{j_{1}}a^{i_{2}}_{j_{2}}\dots a^{i_{k}}_{j_{k}}\alpha^{j_{1}}\alpha^{j_{2}}\dots \alpha^{j_{k}}$$
+	so by the definition, we get
+	$$\sum a_{I}\Omega^{i_{1}}\wedge \Omega^{i_{2}}\wedge\dots \wedge \Omega^{i_{k}}=f\left( \sum \Omega^{i}\otimes e_{i}\right)=\left( \sum b_{I}a^{i_{1}}_{j_{1}}a^{i_{2}}_{j_{2}}\dots a^{i_{k}}_{j_{k}}\alpha^{j_{1}}\alpha^{j_{2}}\dots \alpha^{j_{k}}\right) \left( \sum \Omega^{i}\otimes e_{i}\right) $$
+	$$=\sum b_{I}a^{i_{1}}_{j_{1}}a^{i_{2}}_{j_{2}}\dots a^{i_{k}}_{j_{k}}\Omega^{j_{1}}\wedge \Omega^{j_{2}}\wedge \dots \wedge \Omega^{j_{k}}=\sum b_{I}(a^{i_{1}}_{j_{1}}\Omega^{j_{1}})\wedge (a^{i_{2}}_{j_{2}}\Omega^{j_{2}})\wedge \dots \wedge (a^{i_{k}}_{j_{k}}\Omega^{j_{k}})$$
+	$$=\sum b_{I}\Psi^{i_{1}}\wedge \Psi^{i_{2}}\wedge \dots \wedge \Psi^{i_{k}}$$
+	which ensures the claim.~$\square$
+	
+	\hspace*{\fill}
+	
+	\textcolor{brown}{\textbf{\underline{Recall}}}: Recall that for a principal $G$-bundle $\pi:O\longrightarrow M$, we have the \textbf{covariant derivative} (see the appendix below or [1],[2]) $D$ acting on $\Omega^{k}(P)$, which is given by
+	$$D\varphi(X_{1},X_{2},\dots,X_{k}):=d\varphi(h(X_{1}),h(X_{2}),\dots,h(X_{k}))~~~(\forall \varphi\in \Omega^{k}(P),~\forall X_{i}\in \Gamma(TP))$$
+    where $h:TP\longrightarrow \mathcal{H}$ is the projection to the horizontal distribution. And we simply denote this as $D\varphi=(d\varphi)^{h}$.
+
+    \Lemma{
+    Let $\pi:P\longrightarrow M$ be a principal $G$-bundle and a connection on $P$ is given, let $\varphi\in \Omega^{*}(P)_{\mathrm{bas}}$, i.e., $\varphi$ is a baisc form on $P$, then we have
+    $$D\varphi=d\varphi$$
+    i.e., the covariant derivative acting on the basic forms is the same as the exterior differantial operator $d$, $D|_{\Omega^{*}(P)_{\mathrm{bas}}}=d$.
+    }
+
+    Proof: Since giving a connection on $P$ is equivalent to giving a horizontal distribution on $P$ (see[1] or [3]), hence for any $X\in \Gamma(TP)$, it can be decomposed as 
+    $$X=hX+vX$$
+    where $h:TP\longrightarrow \mathcal{H},~v:TP\longrightarrow \mathcal{V}$ are the projections respectively. Since the vertical tangent space at $p\in P$ is $\mathcal{V}_{p}:=\ker(d\pi_{p})$, we get
+    $$d\pi(X)=d\pi(hX)$$
+    i.e.,
+    $$d\pi=d\pi\circ h$$
+    Assume that $\varphi\in \Omega^{k}(P)_{\mathrm{bas}}$, which means $\exists \alpha\in \Omega^{k}(M)$ such that $\varphi=\pi^{*}\alpha$ (see [4]). Thus
+    $$D\varphi=d\varphi \circ h=(d\pi^{*}\alpha)\circ h=(\pi^{*}d\alpha)\circ h=d\alpha\circ d\pi\circ h=d\alpha \circ d\pi$$
+    $$=\pi^{*}(d\alpha)=d(\pi^{*}\alpha)=d\varphi$$
+    which proves the lemma.~$\square$
+
+    \hspace*{\fill}
+
+    Our main result on principal bundles is stated as below.
+    \Theorem{
+    Let $\pi:P\longrightarrow M$ be a principal $G$-bundle with any given connection $\omega$ and hence its curvature $\Omega$. Let $f\in \mathrm{Inv}^{k}(G)$, then we have\par
+    (1) $f(\Omega)\in \Omega^{2k}(P)_{\mathrm{bas}}$, i.e., $\exists \Lambda\in \Omega^{2k}(M)$ such that $f(\Omega)=\pi^{*}\Lambda$;\par
+    (2) $\Lambda\in \ker(d|_{\Omega^{2k}(M)})$;\par
+    (3) $[\Lambda]\in H^{2k}_{\mathrm{dR}}(M)$ is independent of the choice of the connection $\omega$ on $P$.
+    }
+
+    Proof: (1) We need to check that $f(\Omega)$ is both $G$-invariant and horizontal (see [1] or [4]). For any $g\in G$, by the definition of $f(\Omega)$, we have
+ $$r_{g}^{*}f(\Omega)=r_{g}^{*}\left(\sum a_{I}\Omega^{i_{1}}\wedge \dots \wedge \Omega^{i_{k}}\right)=\sum\left( 
+a_{I}r_{g}^{*}\Omega^{i_{1}}\wedge \dots \wedge r_{g}^{*}\Omega^{i_{k}} \right)$$
+here note that $r_{g}^{*}a_{I}=a_{I}$ since $a_{I}$ are constant coefficient. 
+By the property of the curvature $\Omega\in \Omega^{2}(P;\mathfrak{g})$, we know that
+$$r_{g}^{*}\Omega=(\mathrm{Ad}g^{-1})\circ \Omega$$
+i.e., if $\Omega\triangleq \sum \Omega^{i}\otimes e_{i}$, then
+$$r^{*}_{g}\left(\sum \Omega^{i}\otimes e_{i}\right)=\sum \left( (\mathrm{Ad}g^{-1})\circ \Omega \right)^{i}\otimes e_{i}$$
+hence we have
+$$r^{*}_{g}\Omega^{i}=\left( 
+(\mathrm{Ad}g^{-1})\circ \Omega \right)^{i}$$
+so we commpute
+$$r_{g}^{*}f(\Omega)=\sum a_{I}(r_{g}^{*}\Omega^{i_{1}})\wedge \dots\wedge (r_{g}^{*}\Omega^{i_{k}})$$
+$$=\sum a_{I}(\mathrm{Ad}g^{-1}\circ \Omega)^{i_{1}}\wedge \dots \wedge (\mathrm{Ad}g^{-1}\circ \Omega)^{i_{k}}=f(\mathrm{Ad}g^{-1}\circ \Omega)$$
+since $f\in \mathrm{Inv}^{k}(G)$, it's clear to see that
+$$f(\mathrm{Ad}g^{-1}\circ \Omega)=f(\Omega)$$
+which means
+$$r_{g}^{*}f(\Omega)=f(\Omega)$$
+i.e., $f$ is $G$-invartiant. By the property of $\Omega$, we know that $\Omega(X,Y)=(d\omega)(h(X),h(Y))$ (see [1] or [3]) for all $X,Y\in \Gamma(TP)$, which implies that
+$$\Omega\in \Omega^{2}(P;\mathfrak{g})_{\mathrm{hor}}$$
+i.e., $\Omega$ is horizontal (see [1] or [3]), so we immediately get
+$$\Omega^{i}\in \Omega^{2}(P)_{\mathrm{hor}}$$
+i.e.,
+$$i(V)\Omega^{i}=0~~~(\forall V\in \Gamma(\mathcal{V}))$$
+then we get
+$$i(V)f(\Omega)=i(V)\left( \sum a_{I}\Omega^{i_{1}}\wedge \dots \wedge \Omega^{i_{k}} \right)=0~~~(\forall V\in \Gamma(\mathcal{V}))$$
+so $f(\Omega)$ is also horizontal. Since $f(\Omega)$ is both $G$-invariant and horizonal, then it is basic (see [4]), i.e., $\exists \Lambda\in \Omega^{2k}(M)$ such that
+$f(\Omega)=\pi^{*}\Lambda$;\par
+(2) Note that $\pi:P\longrightarrow M$ is surjective and hence so is the differential map $d\pi:TP\longrightarrow TM$. Also, we see that the pullback map $\pi^{*}: \Omega^{*}(M)\longrightarrow \Omega^{*}(P)$ is injective by its contravariant functoroality. So if we can prove that $\pi^{*}(d\Lambda)=0$ then we immediately get $d\Lambda=0$ from the injectivity of $\pi^{*}$. Now we prove this:\par
+note that 
+$$\pi^{*}(d\Lambda)=d(\pi^{*}\Lambda)=d(f(\Omega))$$
+we express $f(\Omega)$ as
+$$f(\Omega)\triangleq \sum_{I}a_{I}\Omega^{i_{1}}\wedge \dots \wedge\Omega^{i_{k}}$$
+Since we know that $D\Omega=0$ (see the appendix below or [1] or [2]), 
+this means 
+$$D\Omega^{i}=0~~~(\forall i)$$
+note that by the property of the cuevature $\Omega\in \Omega^{2}(P;\mathfrak{g})$ (see [1] or [3] and the appendix below)
+$$\Omega\in \Omega^{2}_{\mathrm{Ad}}(P;\mathfrak{g})$$
+this means that if $\Omega\triangleq \Omega^{i}\otimes e_{i}$, then we have
+$$\Omega^{i}\in \Omega^{2}_{\mathrm{Ad}}(P)~~~(\forall i)$$
+by (1) we know that $f(\Omega)$ is basic, so according to Lemma 1, we compute
+$$d(f(\Omega))=D(f(\Omega))=D\left(\sum_{I}a_{I}\Omega^{i_{1}}\wedge \dots \wedge \Omega^{i_{k}}\right)$$
+here note that the coefficients $a_{I}$ are all constants, hence
+$$a_{I}\in \Omega^{0}(P)_{\mathrm{bas}}$$
+so by Lemma 1, we have
+$$Da_{I}=da_{I}=0$$
+because $D$ is an antidirivation of degree $+1$ on the tensorial forms (see the appendix below)
+$$d(f(\Omega))=D\left( \sum_{I}a_{I}\Omega^{i_{1}}\wedge \dots \wedge \Omega^{i_{k}} \right)=\sum_{I}\sum_{j}a_{I}\Omega^{i_{1}}\wedge \dots \wedge D\Omega^{i_{j}}\wedge \dots \wedge\Omega^{i_{k}}=0$$
+since each $D\Omega^{i_{j}}=0$. 
+So we see that
+$$d(f(\Omega))=\pi^{*}(d\Lambda)=0$$
+so by the injectivity of $\pi^{*}:\Omega^{*}(M)\longrightarrow \Omega^{*}(P)$, $d\Lambda$=0;\par
+(3) For any two connections $\omega_{0},\omega_{1}\in \Omega^{1}(P;\mathfrak{g})$ on $P$, define
+\begin{equation}
+    \widehat{\omega}_{t}:=(1-t)\pi_{1}^{*}\omega_{0}+t\pi_{1}^{*}\omega_{1}~~~(\forall t\in [0,1])
+\end{equation}
+where $\pi_{1}:P\times I\longrightarrow P$ is the projection to the first factor and $I(\subseteq \mathbb{R})$ is an open interval containing $[0,1]$. We first check that for any $t\in [0,1]$, $\widehat{\omega}_{t}$ is a connection on the principal bundle $P\times I\longrightarrow M\times I$:\par
+Take $\forall A\in \mathfrak{g}$, note that $\widetilde{\pi}:P\times I\longrightarrow M\times I$ is a principal $G$-bundle, where the action is given by $(p,t)g=(pg,t)$. We denote the fundamental vector field induced by $A\in\mathfrak{g}$ on $P\times I$ by $\underline{A}^{P\times I}\in \Gamma(T(P\times I))$, so for any point $(p,t)\in P\times I$, we have
+$$(\pi_{1}^{*}\omega_{0})_{(p,t)}\left(\underline{A}^{P\times I}_{(p,t)}\right)=(\omega_{0})_{p}\left( (d\pi_{1})_{(p,t)}(\underline{A}^{P\times I}_{(p,t)}) \right)$$
+so by the definition of the fundamental vector field, we have
+$$(d\pi_{1})_{(p,t)}(\underline{A}^{P\times I}_{(p,t)})=(d\pi_{1})_{(p,t)}\left( \frac{d}{ds}\bigg|_{s=0}(p,t)\exp(sA) \right)$$
+$$=\frac{d}{ds}\bigg|_{s=0}\bigg[
+\pi_{1}\bigg((p,t)\exp(sA)\bigg) \bigg]$$
+note that since $\pi_{1}$ is the projection, so it is a $G$-equivariant map, i.e., $(\pi_{1}(p,t))g=\pi_{1}((p,t)g)$, so back to our computation, it gives
+$$(d\pi_{1})_{(p,t)}(\underline{A}^{P\times I}_{(p,t)})=\frac{d}{ds}\bigg|_{s=0}\left[ \bigg( \pi_{1}(p,t) \bigg)\exp(sA) \right]=\frac{d}{ds}\bigg|_{s=0}\left( p\exp(sA) \right)=\underline{A}^{P}_{p}$$
+hence we get
+$$(\pi_{1}^{*}\omega_{0})_{(p,t)}\left( \underline{A}^{P\times I}_{(p,t)} \right)=(\omega_{0})_{p}(\underline{A}^{P}_{p})=A$$
+a same discussion shows that
+$$(\pi_{1}^{*}\omega_{1})_{(p,t)}\left( \underline{A}^{P\times I}_{(p,t)} \right)=A$$
+so for any point $(p,t)\in P\times I$, any $A\in \mathfrak{g}$ and any $t'\in [0,1]$, we have 
+$$(\widehat{\omega}_{t'})_{(p,t)}(\underline{A}^{P\times I}_{(p,t)})=\bigg((1-t')\pi_{1}^{*}\omega_{0}+t'\pi_{1}^{*}\omega_{1}\bigg)(\underline{A}^{P\times I}_{(p,t)})=(1-t')A+t'A=A$$
+finally, just recall that what we have done in the proof of the the properties that $r_{g}^{*}\omega=\mathrm{Ad}(g^{-1})\circ \omega$ for the connection $\omega\in \Omega^{1}(P;\mathfrak{g})$ (see [1] or [3]:thm2), if we replace $\omega$ as $\pi_{1}^{*}\omega_{0}$ and $\pi_{1}^{*}\omega_{1}$ in our case, then the same discussion also leads to
+$$r_{g}^{*}(\pi_{1}^{*}\omega_{0})=\mathrm{Ad}(g^{-1})\circ (\pi_{1}^{*}\omega_{0}),~~~r_{g}^{*}(\pi_{1}^{*}\omega_{1})=\mathrm{Ad}(g^{-1})\circ (\pi_{1}^{*}\omega_{1})$$
+where we just need to note that the right-translation $r_{g}$ on $P\times I$ is given by $(p,t)\mapsto (pg,t)$. Hence for all $t'\in [0,1]$ and all $g\in G$ we get
+$$r_{g}^{*}\widehat{\omega}_{t'}=(1-t')r_{g}^{*}(\pi_{1}^{*}\omega_{0})+t'r_{g}^{*}(\pi_{1}^{*}\omega_{1})=(1-t')\mathrm{Ad}(g^{-1})\circ (\pi_{1}^{*}\omega_{0})+t'\mathrm{Ad}(g^{-1})\circ (\pi_{1}^{*}\omega_{1})$$
+$$=\mathrm{Ad}(g^{-1})\circ\left( (1-t')(\pi_{1}^{*}\omega_{0})+t'(\pi_{1}^{*}\omega_{1}) \right)=\mathrm{Ad}(g^{-1})\circ \widehat{\omega}_{t'}$$
+So in conclusion, the form defined by (1) is indeed a connection on the princial bundle $\widetilde{\pi}:P\times I\longrightarrow M\times I$ for $\forall t\in [0,1]$.\par
+Now, for every $t\in [0,1]$ we define the inclusion operator
+$$i_{t}:P\hookrightarrow P\times I$$
+$$p\mapsto (p,t)$$
+note that for $\forall t\in [0,1]$, we have $\pi_{1}\circ i_{t}=\mathrm{Id}$, hence we immediately get
+$$(\pi\circ i_{t})^{*}=i_{t}^{*}\circ \pi_{1}^{*}=\mathrm{Id}~~~(\forall t\in [0,1])$$
+which implies that
+$$i_{t}^{*}\widehat{\omega}_{t}=(1-t)i_{t}^{*}\pi_{1}^{*}\omega_{0}+ti_{t}^{*}\pi_{1}^{*}\omega_{1}=(1-t)\omega_{0}+t\omega_{1}$$
+thus
+$$(i_{t}^{*}\widehat{\omega}_{t})|_{t=0}=\omega_{0},~~~(i_{t}^{*}\widehat{\omega}_{t})|_{t=1}=\omega_{1}$$
+Now, let
+$$\widehat{\Omega}_{t}=d\widehat{\omega}_{t}+\frac{1}{2}[\widehat{\omega}_{t},\widehat{\omega}_{t}]$$
+be the curvature of $\widehat{\omega}_{t}$. So we compute
+$$i_{t}^{*}\widehat{\Omega}_{t}=i_{t}^{*}d\widehat{\omega}_{t}+i_{t}^{*}\left( \frac{1}{2}[\widehat{\omega}_{t},\widehat{\omega}_{t}] \right)=d(i_{t}^{*}\widehat{\omega}_{t})+\frac{1}{2}[i_{t}^{*}\widehat{\omega}_{t},i_{t}^{*}\widehat{\omega}_{t}]$$
+this means
+$$(i_{t}^{*}\widehat{\Omega}_{t})|_{t=0}=d\omega_{0}+\frac{1}{2}[\omega_{0},\omega_{0}]=\Omega_{0},~~~(i_{t}^{*}\widehat{\Omega}_{t})|_{t=1}=d\omega_{1}+\frac{1}{2}[\omega_{1},\omega_{1}]=\Omega_{1}$$
+Now, for $f\in \mathrm{Inv}^{k}(G)$, if we express $f$ as
+$$f\triangleq \sum_{I}a_{I}e^{i_{1}}e^{i_{2}}\dots e^{i_{k}}$$
+then we can see that
+$$i_{t}^{*}f(\widehat{\Omega}_{t})=i_{t}^{*}\left( \sum_{I}a_{I}\widehat{\Omega}_{t}^{i_{1}}\wedge \dots \wedge \widehat{\Omega}_{t}^{i_{k}} \right)$$
+note that $a_{I}$ are constant coefficients, we get
+$$i_{t}^{*}f(\widehat{\Omega}_{t})=\sum_{I}a_{I}(i_{t}^{*}\widehat{\Omega}_{t}^{i_{1}}) \wedge \dots \wedge (i_{t}^{*}\widehat{\Omega}_{t}^{i_{k}})$$
+so take $t=0$ and $t=1$ respectively, by equation (2), we get
+$$\left( i_{t}^{*}f(\widehat{\Omega}_{t}) \right)\bigg|_{t=0}=\sum_{I}a_{I}\Omega_{0}^{i_{1}}\wedge \dots \wedge \Omega_{0}^{i_{k}}$$
+    
+	
+	
+	
+	
+	
+	
+	
+	\newpage
+	\section{Appendix A}
+	
+	This appendix is made just in order to make the note more  self-contained. Stated without proof. \sout{because I will feel so bored to type so many codes}. (you may also see these matrieals in [1] or [2], where they are discussed very clear) 
+	
+	\subsection{Associated Bundle}
+
+	\textcolor{violet}{\textbf{\underline{Notaion}}}: For the representation $\rho:G\longrightarrow GL(V)$ of a group $G$, where $V$ is a vector space, we will simply denote $gv\triangleq g\cdot v:=\rho(g)(v)$ for any $g\in G$ and any $v\in V$. 
+	
+	\hspace*{\fill}
+	
+	Let $\pi:P\longrightarrow M$ be a principal $G$-bundle. Given any representation of $G$, $\rho:G\longrightarrow \mathrm{Aut}(V)$ on a finite-dimensional vector space $V$, it induces the \textbf{associated bundle} $P\times_{\rho}V:=P\times V/\sim $, where the equivalence relation $\sim$ is defined by
+    $$(p,v)\sim (p',v')\Longleftrightarrow \exists g\in G \mbox{ such that }p'=pg, v'=g^{-1}v$$\par
+
+    \thm: 
+    The associated bundle $\widehat{\pi}: P\times_{\rho}V\longrightarrow M,~[p,v]\mapsto \pi(p)$ is a well-defined fiber bundle with fiber $V$ on the base manifold $M$. Hence it can be viewed as a vector bundle if $V$ is of finite-dimension.
+
+    \subsection{Tensorial Forms}
+
+    Let $\pi:P\longrightarrow M$ be a principal $G$-bundle and $\rho:G\longrightarrow \mathrm{Aut}(V)$ be a finite-dimensional representation of $G$.
+
+    \defn: $\alpha\in \Omega^{k}(P;V)$ is called \textbf{right-equivariant of type $\rho$} if for any $g\in G$ we have
+    $$r_{g}^{*}\alpha=\rho(g^{-1})\circ \alpha$$
+    where $r_{g}:P\longrightarrow P,~p\mapsto pg$ is the right translation.
+
+    \defn: $\alpha\in \Omega^{k}(P;V)$ is is called \textbf{horizontal} if for any $X\in \Gamma(\mathcal{V})$ we have
+    $$i(X)\alpha=0$$
+    in which case we will denote as $\alpha\in \Omega^{k}(P;V)_{\mathrm{hor}}$. (alse see [4])
+
+    \defn: $\alpha\in \Omega^{k}(P;V)$ is called \textbf{tensorial of type $\rho$} if for any $g\in G$ and any $X\in \Gamma(\mathcal{V})$ we have
+    $$r_{g}^{*}\alpha=\rho(g^{-1})\circ \alpha \mbox{ and }i(X)\alpha=0$$
+    i.e., $\alpha$ satisfies both of the conditions in the two definitions above. In this case, we denote as $\alpha\in \Omega^{k}_{\rho}(P;V)$.
+
+    \subsection{Covariant Derivative}
+
+    \defn: For any $\alpha\in \Omega^{k}(P;V)$, the \textbf{covariant derivative} $D$ acting on $\alpha$ is defined by
+    $$(D\alpha)(X_{1},X_{2},\dots,X_{k}):=d\alpha(h(X_{1}),h(X_{2}),\dots,h(X_{k}))$$
+    for any $X_{i}\in \Gamma(TP)$.
+
+    \hspace*{\fill}
+
+    The important fact is the following theorem.
+
+    \thm: The covariant derivative $D$ restricting on $\Omega^{k}_{\rho}(P;V)$ gives us an antiderivation of degree $+1$
+    $$D:\Omega^{k}_{\rho}(P;V)\longrightarrow \Omega^{k+1}_{\rho}(P;V)$$
+    i.e., for any $\omega, \tau\in \Omega^{*}_{\rho}(P;V)$, we have
+    $$D(\omega\wedge \tau)=(D\omega)\wedge \tau+(-1)^{|\omega|}\omega\wedge(D\tau)$$
+    where we denote $|\omega|:=\deg \omega$. Here, we need to note that $D\circ D\neq 0$ in general, which is qutie differental from $d$.
+
+    \hspace*{\fill}
+
+    \textcolor{brown}{\textbf{\underline{Recall}}}: Recall that for a Lie algebra $\mathfrak{g}$ together with its Lie bracket $[\cdot,\cdot]:\mathfrak{g}\times \mathfrak{g}\longrightarrow \mathfrak{g}$, we can define the multiplication operation as follows
+    $$\Omega^{k}(P;\mathfrak{g})\times \Omega^{l}(P;\mathfrak{g})\longrightarrow \Omega^{k+l}(P;\mathfrak{g})$$
+    $$(\omega,\tau)\mapsto [\omega,\tau]$$
+    where for any $X_{i}\in \Gamma(TP)$, we set
+    $$[\omega,\tau](X_{1},\dots,X_{k+l}):=\frac{1}{k!l!}\sum_{\sigma\in S_{k+l}}(\mathrm{sgn}\sigma)\left[ 
+    \omega(X_{\sigma(1)},\dots, X_{\sigma(k)}), \tau(X_{\sigma(k+1)},\dots X_{\sigma(k+l)}) \right]$$
+
+    \hspace*{\fill}
+
+    Now, if we are given a Lie group representation $\rho:G\longrightarrow \mathrm{Aut}(V)$, then we can also define the following multiplication operation
+    $$\Omega^{k}(P;\mathfrak{g})\times \Omega^{l}(P;V)\longrightarrow \Omega^{k+l}(P;V)$$
+    $$(\omega,\tau)\mapsto \omega\cdot \tau$$
+    where for any $X_{i}\in \Gamma(TP)$, we set
+    $$(\omega\cdot \tau)(X_{1},\dots,X_{k+l}):=\frac{1}{k!l!}\sum_{\sigma\in S_{k+l}}(\mathrm{sgn}\sigma)\rho_{*}(\omega(X_{\sigma(1)},\dots,X_{\sigma(k)})\left(\tau(X_{\sigma(k+1)},\dots,X_{\sigma(k+l)})\right)$$
+    where $\rho_{*}:\mathfrak{g}\longrightarrow \mathfrak{gl}(V)$ is the Lie algebra homomorphism induced by $\rho$. Thus for the principal $G$-bundle $\pi:P\longrightarrow M$, if we cosider the case that $V:=\mathfrak{g}$ and $\rho:=\mathrm{Ad}:G\longrightarrow \mathrm{Aut}(\mathfrak{g})$, since we know that
+    $$\mathrm{Ad}_{*}=\mathrm{ad}:\mathfrak{g}\longrightarrow \mathfrak{gl}(\mathfrak{g})$$
+    where $\mathrm{ad}(X)(Y)=[X,Y]$ for all $X,Y\in \mathfrak{g}$, so by our definition, we immediately get
+    $$(\omega\cdot \tau)(X_{1},\dots,X_{k+l})=\frac{1}{k!l!}\sum_{\sigma\in S_{k+l}}(\mathrm{sgn}\sigma)\left[ 
+    \omega(X_{\sigma(1)},\dots, X_{\sigma(k)}), \tau(X_{\sigma(k+1)},\dots X_{\sigma(k+l)}) \right]$$
+    compared with the multiplication on $\Omega^{*}(P;\mathfrak{g})$, it is also saying that
+    $$\omega\cdot \tau=[\omega,\tau]$$
+    in this case.
+
+    \hspace*{\fill}
+
+    The covariant derivative $D$ acting on the tensorial forms $\Omega^{*}_{\rho}(P;V)$ can be given as what the following theorem says.
+    \thm: For the principal $G$-bundle $\pi:P\longrightarrow M$ with a given connection $\omega$ and let $\rho:G\longrightarrow \mathrm{Aut}(V)$ be a finite-dimensional representation of $G$. Then for $\forall \alpha\in \Omega^{k}_{\rho}(P;V)$, we have
+    $$D\alpha=d\alpha+\omega\cdot \alpha$$
+    i.e., $D|_{\Omega^{*}_{\rho}(P;V)}=d+\omega\cdot$
+
+    \cor: If the representaion is $\rho=\mathrm{Ad}:G\longrightarrow \mathrm{Aut}(\mathfrak{g})$, then we have
+    $$D|_{\Omega^{*}_{\mathrm{Ad}}(P;\mathfrak{g})}=d+[\omega, \cdot]$$
+
+    \hspace*{\fill}
+
+    Note that for any given connection $\omega$ on the pricipal bundle, the cuevature defined by $\Omega:=d\omega+\frac{1}{2}[\omega,\omega]$ satisfies $\Omega(X,Y)=(d\omega)(h(X),h(Y))$ for $\forall X,Y\in \Gamma(TP)$, which means that
+    $$\Omega=D\omega$$
+    hence we get
+    $$D\omega=d\omega+\frac{1}{2}[\omega,\omega]$$
+    which implies that the connection $\omega\notin \Omega^{1}_{\mathrm{Ad}}(P;\mathfrak{g})$ by the corollary above. Also note that $\Omega\in \Omega^{2}(P;\mathfrak{g})_{\mathrm{hor}}$
+    thus from the second Bianchi identity, $d\Omega=[\omega,\Omega]$, immediately by the corollary above we get
+    $$D\Omega=d\Omega+[\omega,\Omega]=0$$
+    which is an equialent form of second Bianchi identity.
+
+
+    
+
+
+    
+	
+	
+    \section{References}
+    [1] \textit{Differential Geometry.} Loring W.Tu.\par
+    [2] \textit{微分几何讲义.} 周建伟.\par
+    [3] \textit{主丛的联络与曲率.} LaTexed by RS.\par
+    [4] \textit{Basic Forms on Principal Bundles.} LaTexed by RS.\par
+    [5] \textit{Introduction to Smooth Manifolds}. John M.Lee.\par
+    [6] \textit{Differential Forms in Algebraic Topology.} Raoul Bott \& Loring W,Tu
+	
+	
+	
+	
+	
+	
+\end{document}
