@@ -1,0 +1,596 @@
+\documentclass[a4paper,12pt,UTF8]{ctexart}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage[arrow,matrix]{xy}
+\usepackage{amsmath,amssymb,amscd,bm,bbm,amsthm,mathrsfs}
+\usepackage{amsmath,amscd}
+\usepackage{amsfonts,amssymb}
+\usepackage{xypic}
+\usepackage{indentfirst}
+\usepackage{diagbox}
+\usepackage{graphicx}
+\usepackage{tcolorbox}
+\usepackage{color}
+\usepackage{geometry}
+\geometry{left=1.5cm,right=1.5cm,top=2cm,bottom=1.5cm}
+
+
+\def\d{\textup{d}}
+
+\theoremstyle{definition}
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lem}{Lemma}[section]
+\newtheorem{prop}{Proposition}[section]
+\newtheorem{cor}{Corollary}[section]
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}[section]
+\newtheorem{exmp}{Example}[section]
+\newtheorem*{ack}{致谢}
+
+\theoremstyle{Remark}
+\newtheorem{rem}{Remark}[section]
+
+\renewcommand{\qedsymbol}{$\squre$}
+\renewcommand\baselinestretch{1.25}
+
+\tcbuselibrary{skins}
+
+
+
+\NewTotalTColorBox[auto counter]{\Definition}{ +m }{ 
+    notitle,
+    colback=green!20!white,
+    frame hidden,
+    boxrule=0pt,
+    enhanced,
+    sharp corners,
+    borderline west={4pt}{0pt}{green!80!black},
+}{
+    \textcolor{green!60!black}{
+        \sffamily
+        \textbf{Definition~\thetcbcounter.}%
+    }%
+    #1
+}
+
+\NewTotalTColorBox[auto counter]{\Lemma}{ +m }{ 
+    notitle,
+    colback=red!10!white,
+    frame hidden,
+    boxrule=0pt,
+    enhanced,
+    sharp corners,
+    borderline west={4pt}{0pt}{red!100!black},
+}{
+    \textcolor{red!90!black}{
+        \sffamily
+        \textbf{Lemma~\thetcbcounter.}%
+    }%
+    #1
+}
+
+\NewTotalTColorBox[auto counter]{\Example}{ +m }{ 
+    notitle,
+    colback=black!5!white,
+    frame hidden,
+    boxrule=0pt,
+    enhanced,
+    sharp corners,
+    borderline west={4pt}{0pt}{black!50!black},
+}{
+    \textcolor{black!50!black}{
+        \sffamily
+        \textbf{Example~\thetcbcounter.}%
+    }%
+    #1
+}
+
+\NewTotalTColorBox[auto counter]{\Proposition}{ +m }{ 
+    notitle,
+    colback=blue!5!white,
+    frame hidden,
+    boxrule=0pt,
+    enhanced,
+    sharp corners,
+    borderline west={4pt}{0pt}{blue!80!black},
+}{
+    \textcolor{blue!80!black}{
+        \sffamily
+        \textbf{Proposition~\thetcbcounter.}%
+    }%
+    #1
+}
+
+\NewTotalTColorBox[auto counter]{\Corollary}{ +m }{ 
+    notitle,
+    colback=blue!5!white,
+    frame hidden,
+    boxrule=0pt,
+    enhanced,
+    sharp corners,
+    borderline west={4pt}{0pt}{blue!50!black},
+}{
+    \textcolor{blue!50!black}{
+        \sffamily
+        \textbf{Corollary~\thetcbcounter.}%
+    }%
+    #1
+}
+
+\NewTotalTColorBox[auto counter]{\Theorem}{ +m }{ 
+    notitle,
+    colback=red!10!white,
+    frame hidden,
+    boxrule=0pt,
+    enhanced,
+    sharp corners,
+    borderline west={4pt}{0pt}{red!100!black},
+}{
+    \textcolor{red!90!black}{
+        \sffamily
+        \textbf{Theorem~\thetcbcounter.}%
+    }%
+    #1
+}
+
+
+
+
+\begin{document}
+
+
+\section{Some Review and Notations}
+
+\underline{\textbf{Recall}}: Let $V$ be a finite-dimensional vector space over $\mathbb{R}$, let $J\in {\rm End}_{\mathbb{R}}(V)$ a linear map on $V$ to itself satisfying 
+$$J\circ J=-{\rm Id}_{V}$$
+i.e., $J$ is a complex structure on $V$, then we know that we can turn $V$ into a vector space over $\mathbb{C}$ by defining 
+$$(a+b\sqrt{-1})v:=av+bJ(v)~~(\forall v
+\in V,\forall a,b\in \mathbb{R})$$
+i.e., the scalar multiplication defined above together with the given addition operation makes $V$ into a complex vector space. For such real vector space $V$, recall that its complexified space $V_{\mathbb{C}}$ can be decomposed as
+$$V_{\mathbb{C}}=V^{1,0}\oplus V^{0,1}$$
+where $V^{1,0}$ is the $\sqrt{-1}$-eigenspace of $J$ and $V^{0,1}$ is the $-\sqrt{-1}$-eigenspace of $J$.
+
+\hspace*{\fill}
+
+\textbf{Notation}: For a complex $n$-manifold $M$, its ordinary tangent bundle of the underlying smooth $2n$-manifold is denoted by $TM$, which means it is a real vector bundle of rank $2n$. Similarly, the cotangent bundle of the underlying $2n$-smooth manifold is denoted by $T^{*}M$. Their complexified bundle are denoted by $T_{\mathbb{C}}M$ and $T^{*}_{\mathbb{C}}M$ respectively, so $T_{\mathbb{C}}M$ and $T^{*}_{\mathbb{C}}M$ are complex vector bundles of rank $2n$.
+
+\hspace*{\fill}
+
+\underline{\textbf{Recall}}: Let $M$ be a complex $n$-manifold, recall that we have the canonical complex structure $J_{M}$ on $TM$, which in local coordinates $(U;z^{1},z^{2},\dots,z^{n})$ is given by
+$$\frac{\partial}{\partial x^{i}}\mapsto \frac{\partial}{\partial y^{i}},~~~\frac{\partial}{\partial y^{i}}\mapsto -\frac{\partial}{\partial x^{i}}$$
+where $z^{i}\triangleq x^{i}+\sqrt{-1}y^{i}~(x^{i},y^{i}\in \mathbb{R})$ for $1\leq i\leq n$. Hence at any point $p\in M$, $J_{M}$ turns $T_{p}M$ into a complex vector space and the associated complex vector space to $(T_{p}M,J_{M})$ will be denoted by $(T_{J}M)_{p}$, hence we get a complex vecor bundle $T_{J}M:=\cup_{p\in M}(T_{J}M)_{p}$ of rank $n$. Recall that with respect to $J_{M}$, $T_{\mathbb{C}}M$ can be decomposed as
+$$T_{\mathbb{C}}M=T^{(1,0)}M\oplus T^{(0,1)}M$$
+where $T^{(1,0)}M$ is the $\sqrt{-1}$-eigenspace of $J_{M}$ and $T^{(0,1)}M$ is the $-\sqrt{-1}$-eigenspace of $J_{M}$, recall that their basis are given by
+$$\bigg\{\frac{\partial}{\partial z^{i}}\bigg\}_{i=1}^{n},~~~\bigg\{\frac{\partial}{\partial \overline{z}^{i}}\bigg\}_{i=1}^{n}$$
+respectively, where
+$$\frac{\partial}{\partial z^{i}}:=\frac{1}{2}\left( \frac{\partial}{\partial x^{i}}-\sqrt{-1}\frac{\partial}{\partial y^{i}} \right),~~~\frac{\partial}{\partial \overline{z}^{i}}:=\frac{1}{2}\left( \frac{\partial}{\partial x^{i}}+\sqrt{-1}\frac{\partial}{\partial y^{i}} \right)$$
+hence $T^{(1,0)}M$ and $T^{(0,1)}M$ are complex vector bundles of rank $n$. We will denote $J_{M}$ by $J$ if there is no confusion.
+
+\underline{\textbf{Recall}}: If we define the following map
+$$\xi:T_{J}M\longrightarrow T^{(1,0)}M$$
+$$v\mapsto v-\sqrt{-1}J(v)$$
+then it can be easily checked that $\xi$ is a linear isomorphism. Note that under the local coordinate $(U;(z^{i}))$, the basis of $T_{J}M$ can be given by $\{\frac{\partial}{\partial x^{i}}\}_{i=1}^{n}$.
+
+\hspace*{\fill}
+
+\textbf{Notation}: For a complex $n$-manifold $M$, we denote $\wedge^{k}(M):=\wedge^{k}(T^{*}M)$ and its complexification as $\wedge^{k}_{\mathbb{C}}(M)$. And we denote $\mathcal{E}^{k}(M):=\Gamma(\wedge_{\mathbb{C}}^{k}(M))$ the space of smooth sections of $\wedge_{\mathbb{C}}^{k}(M)$. So the exterior differential operator $d$ acting on ordianry differential forms can be linearly extended as
+$$d:\mathcal{E}^{k}(M)\longrightarrow \mathcal{E}^{k+1}(M)$$
+
+\hspace*{\fill}
+
+\underline{\textbf{Recall}}: Recall that the space of $(p,q)$-forms on a complex $n$-manifold $M$ is defined by
+$$\mathcal{E}^{p,q}(M):=\Gamma(\wedge^{p,q}(M))$$
+where $\wedge^{p,q}(M):=\left[\wedge^{p}(T^{*(1,0)}M)\right]\wedge \left[\wedge^{q}(T^{*(0,1)}M)\right]$, so we have
+$$\wedge^{k}_{\mathbb{C}}(M)=\bigoplus_{p+q=k}\wedge^{p,q}(M)$$
+We define the \textbf{Dolbeault operator} $\overline{\partial}$ and its conjugate $\partial$ to be
+$$\overline{\partial}:=\pi^{p,q+1}\circ d:\mathcal{E}^{p,q}(M)\rightarrow \mathcal{E}^{p,q+1}(M),~~\partial:=\pi^{p+1,q}\circ d:\mathcal{E}^{p,q}(M)\rightarrow \mathcal{E}^{p+1,q}(M)$$
+in local coordinate $(U;z^{1},z^{2},\dots,z^{n})$, let $$\alpha\triangleq \sum_{J,K}\alpha_{JK}dz^{j_{1}}\wedge \dots \wedge dz^{j_{p}}\wedge d\overline{z}^{k_{1}}\wedge \dots \wedge d\overline{z}^{k_{q}}\in \mathcal{E}^{p,q}(U)$$ 
+then $\overline{\partial}\alpha\in \mathcal{E}^{p,q+1}(U)$ and $\partial \alpha\in \mathcal{E}^{p+1,q}$ are given by
+$$\overline{\partial}\alpha=\sum_{J,K,s}\frac{\partial \alpha_{JK}}{\partial \overline{z}^{s}}d\overline{z}^{s}\wedge dz^{j_{1}}\wedge \dots \wedge dz^{j_{p}}\wedge d\overline{z}^{k_{1}}\wedge \dots\wedge d\overline{z}^{k_{q}}$$
+$$\partial\alpha=\sum_{J,K,s}\frac{\partial \alpha_{JK}}{\partial z^{s}}dz^{s}\wedge dz^{j_{1}}\wedge \dots \wedge dz^{j_{p}}\wedge d\overline{z}^{k_{1}}\wedge \dots\wedge d\overline{z}^{k_{q}}$$
+
+\hspace*{\fill}
+
+\underline{\textbf{Recall}}: Recall that for the complex $n$-manifold $M$, we have the Dolbeault complex
+$$\xymatrix{
+0\ar[r]&\mathcal{E}^{p,0}(M)\ar[r]^{\overline{\partial}}\ar[r]&\dots\ar[r]^{\overline{\partial}}& \mathcal{E}^{p,q-1}(M)\ar[r]^{\overline{\partial}}&\mathcal{E}^{p,q}(M)\ar[r]^{\overline{\partial}}&\mathcal{E}^{p,q+1}(M)\ar[r]^{\overline{\partial}}&\dots
+}$$
+and the \textbf{Dolbeault cohomology groups}
+$$H^{p,q}(M):=\frac{\ker \left\{ \overline{\partial}:\mathcal{E}^{p,q}(M)\rightarrow \mathcal{E}^{p,q+1}(M) \right\}}{{\rm Im}\left\{ \overline{\partial}:\mathcal{E}^{p,q-1}(M)\rightarrow \mathcal{E}^{p,q}(M)  \right\}}$$
+More over, we have the following property
+\Proposition{
+For the complex $n$-manifold $M$, we have\par
+(1) $$d=\overline{\partial}+\partial,~~\partial\circ \partial=0,~~\overline{\partial}\circ \overline{\partial}=0,~~\partial\circ \overline{\partial}+\overline{\partial}\circ \partial=0$$\par
+(2) For any $\alpha\in \mathcal{E}^{p,q}(M)$ and $\beta\in \mathcal{E}^{k,l}(M)$, we have
+$$\overline{\partial}(\alpha\wedge \beta)=\overline{\partial}\alpha \wedge \beta+(-1)^{p+q}\alpha\wedge \overline{\partial} \beta$$
+}
+
+\hspace*{\fill}
+
+\textbf{Notation}: For a holomorphic vector bundle $\pi:E\rightarrow M$, $\mathcal{O}(U;E)$ is the space of holomorphic sections of $E$ on $U\subseteq M$ and $\Gamma(U;E)$ is the space of smooth sections of $E$ on $U$.
+
+
+
+
+\section{Bundle-Valued Forms}
+
+\subsection{Some Constructions on Vector Bundles}
+
+\Example{
+Let $E\rightarrow M$ be a holomorphic vector bundle of rank $n$ over the complex manifold $M$. The \textbf{dual bundle} $E^{*}$ is given by $(E^{*})_{p}=(E_{p})^{*}={\rm Hom}_{\mathbb{C}}(E_{p},\mathbb{C})$. Let $(s_{1},\dots,s_{n})$ be a local holomorphic frame of $E$ and $(\varepsilon^{1},\dots,\varepsilon^{n})$ be its dual local holomorphic frame for $E^{*}$. Let $(\widetilde{s}_{1},\widetilde{s}_{2},\dots,\widetilde{s}_{n})$ be another holomorphic local frame with transition function $\tau$, i.e., when they overlap, we have
+$$\widetilde{s}_{j}=\tau^{k}_{j}s_{k}$$
+then by linear algebra, we get
+$$\widetilde{\varepsilon}^{k}=(\tau^{-1})^{k}_{l}\varepsilon^{l}$$
+which means that the transition function $\tau^{*}$ for $E^{*}$ is given by $\tau^{*}=(\tau^{-1})^{T}$.
+}
+
+\Example{
+Let $E_{1},E_{2}$ be two holomorphic vector bundles of rank $n_{1}$ and $n_{2}$ respectively on the complex manifold $M$. Their \textbf{Whitney sum} $E_{1}\oplus E_{2}$ is given by $(E_{1}\oplus E_{2})_{p}:=(E_{1})_{p}\oplus (E_{2})_{p}$ for any $p\in M$. Take local holomorphic frames $(s_{1},s_{2},\dots,s_{n_{1}})$ for $E_{1}$ and $(s_{1}',s_{2}',\dots,s_{n_{2}}')$ for $E_{2}$, then we get a local holomorphic frame $(s_{1},\dots,s_{n_{1}},s_{1}',\dots,s_{n_{2}}')$ for $E_{1}\oplus E_{2}$. If $\tau_{1}, \tau_{2}$ are the transition functions of $E_{1},E_{2}$ respectively, then the transition function for $E_{1}\oplus E_{2}$ is the $GL(n_{1}+n_{2},\mathbb{C})$-valued matrix function
+$$\begin{pmatrix}
+    \tau_{1}& 0 \\
+    0 & \tau_{2} \\
+\end{pmatrix}$$
+which is clearly holomorphic, hence $E_{1}\oplus E_{2}$ is a holomorphic vector bund of rank $n_{1}+n_{2}$.
+}
+
+\Example{
+Let $E_{1},E_{2}$ be as the same in the above example, then their \textbf{tensor product bundle} $E_{1}\otimes E_{2}$ is given by $(E_{1}\otimes E_{2})_{p}=(E_{1})_{p}\otimes (E_{2})_{p}$ for any $p\in M$. Let $(s_{i}),(s_{j}')$ be the local holomorphic frames respectively, then $(s_{i}\otimes s_{j}')$ forms a local holomorphic frame for $E_{1}\otimes E_{2}$. Let $\tau_{1},\tau_{2}$ be the transition functions, then $\tau_{1}\otimes \tau_{2}$ will be the transition function for $E_{1}\otimes E_{2}$, hence $E_{1}\otimes E_{2}$ is a holomorphic vector bundle of rank $n_{1}n_{2}$.
+}
+
+\Example{
+Let $E\rightarrow M$ be a holomorphic vector bundle of rank $k$. The \textbf{determinant bundle of $E$} is the complex vector bundle $\det E\rightarrow M$ whose fiber at $p\in M$ is $(\det E)_{p}:=\wedge^{k}(E_{p})$ hence $\det E$ is a line bundle. For any local holomorphic frame $(s_{1},s_{2},\dots,s_{k})$ for $E$, $s_{1}\wedge s_{2}\wedge \dots\wedge s_{k}$ is a local holomorphic frame for $\det E$. Let $\tau$ be the transition function for $E$, then by computation we know that $\det \tau$ is the transition function for $\det E$. Hence $\det E$ is a holomorphic line bundle.
+}
+
+\Example{
+Let $E,F$ be two holomorphic vector bundles over the complex manifold $M$. Then we can form a bundle ${\rm Hom}(E,F)$ whose fiber is $({\rm Hom}(E,F))_{p}={\rm Hom}_{\mathbb{C}}(E_{p},F_{p})$ at any $p\in M$. If we define the map
+$$F_{p}\otimes (E_{p})^{*}\longrightarrow {\rm Hom}_{\mathbb{C}}(E_{p},F_{p})$$
+$$f\otimes \varphi\mapsto (\cdot \mapsto \varphi(\cdot)f)$$
+then it can be checked that this is a bijection and hence we can indetify $F\otimes E^{*}$ with ${\rm Hom}(E,F)$, in particular, $E\otimes E^{*}\cong {\rm End}(E)={\rm Hom}(E,E)$.
+}
+
+
+
+
+\subsection{Bundle-Valued Forms}
+
+Let us consider the case of real manifold first.\par
+For a smooth manifold $M$, let $\pi:E\rightarrow M$ be a smooth complex vector bund on $M$, we have the following definition about bundle-valued forms
+\Definition{
+For $\forall q\in \mathbb{N}$, define
+$$\mathcal{E}^{q}(M;E):=\Gamma(\wedge^{q}_{\mathbb{C}}(M)\otimes E)$$
+}
+
+Now, we have the following wedge product operation on bundle-valued forms
+\Definition{
+$$\wedge: \mathcal{E}^{p}(M)\times \mathcal{E}^{q}(M;E)\longrightarrow \mathcal{E}^{p+q}(M;E)$$
+$$(\alpha, \beta\otimes \sigma)\mapsto \alpha \wedge (\beta \otimes \sigma):=(\alpha \wedge \beta)\otimes \sigma$$
+}
+
+\textbf{Remark}: In particular, if $q=0$ then $\mathcal{E}^{0}(M;E)=\Gamma(E)$, in which case $\alpha\wedge \sigma=\alpha\otimes \sigma$ for $\forall \sigma\in \Gamma(E)$; if $p=0$, then $\mathcal{E}^{0}(M)=C^{\infty}(M;\mathbb{C})$, in whcih case $\alpha\wedge (\beta\otimes \sigma)=\alpha(\beta\otimes \sigma)$.
+
+\Definition{
+$$\wedge: \mathcal{E}^{p}(M;E^{*})\times \mathcal{E}^{q}(M;E)\longrightarrow \mathcal{E}^{p+q}(M)$$
+$$\left( (\gamma\otimes \varphi),(\beta\otimes \sigma) \right)\mapsto (\gamma\otimes \varphi)\wedge (\beta\otimes \sigma):=\varphi(\sigma)(\gamma\wedge \beta)$$
+}
+
+\hspace*{\fill}
+
+There is a special and important case when the bundle is ${\rm End}(E)$. 
+
+\Definition{
+For $\forall \alpha\otimes \varphi\in \mathcal{E}^{p}(M;{\rm End}(E))$ and $\forall \beta\otimes \psi\in \mathcal{E}^{q}(M;{\rm End}(E))$, define
+$$(\alpha\otimes \varphi)\wedge (\beta\otimes \psi):=(\alpha \wedge \beta)\otimes (\varphi\circ \psi)\in \mathcal{E}^{p+q}(M;{\rm End}(E))$$
+and for $\forall \gamma\otimes \sigma\in \mathcal{E}^{l}(M;E)$, define
+$$(\alpha\otimes \varphi)\wedge (\gamma\otimes \sigma):=(\alpha\wedge \gamma)\otimes \varphi(\sigma)\in\mathcal{E}^{p+l}(M;E)$$
+}
+
+\textbf{Remark}: Note that ${\rm End}(E)\cong E\otimes E^{*}$, hence for $\forall \omega\in \mathcal{E}^{q}(M;{\rm End}(E))$, it can be expressed as
+$$\omega\triangleq \omega^{j}_{k}\otimes s_{j}\otimes \varepsilon^{k}$$
+where $(s_{i})$ is a local holomorphic frame for $E$ and $(\varepsilon^{j})$ is its dual basis for $E^{*}$ and therefore $(s_{j}\otimes \varepsilon^{k})$ forms a basis of ${\rm End}(E)$. So for $\forall \omega\in \mathcal{E}^{p}(M;{\rm End}(E)), \forall \eta\in \mathcal{E}^{q}(M;{\rm End}(E))$, we can compute as
+$$\omega\wedge \eta\triangleq (\omega^{j}_{k}\otimes s_{j}\otimes \varepsilon^{k})\wedge (\eta^{l}_{m}\otimes s_{l}\otimes \varepsilon^{m})$$
+$$=(\omega^{j}_{k}\wedge \eta^{l}_{m})\otimes (\delta^{k}_{l}s_{j}\otimes \varepsilon^{m})=(\omega^{j}_{k}\wedge \eta^{k}_{m})\otimes (s_{j}\otimes \varepsilon^{m})$$
+here note that $s_{j}\otimes \varepsilon^{k}(s_{l})=\varepsilon^{k}(s_{l})s_{j}=\delta^{k}_{l}s_{j}$. This means that the matrix of forms representing $\omega \wedge \eta$ is precisely the matrix product of those representing $\omega$ and $\eta$ respectively with entries combined via the wedge product.\par
+For $\forall \gamma\triangleq \gamma^{m}\otimes s_{m}\in \mathcal{E}^{l}(M;E)$, we compute
+$$\omega\wedge \gamma=(\omega^{j}_{k}\otimes s_{j}\otimes \varepsilon^{k})\wedge (\gamma^{m}\otimes s_{m})=(\omega^{j}_{k}\wedge \gamma^{m})\otimes (\varepsilon^{k}(s_{m})\otimes s_{j})=(\omega^{j}_{k}\wedge \gamma^{k})\otimes s_{j}$$
+
+\hspace*{\fill}
+
+\hspace*{\fill}
+
+Now we turn to the case that $M$ is a complex $n$-manifold, $E\rightarrow M$ is a smooth complex vector bundle over $M$. Then the \textbf{bundle of $E$-valued $(p,q)$-forms} is $\wedge^{p,q}(M)\otimes E$, and we denote
+$$\mathcal{E}^{p,q}(M;E):=\Gamma(\wedge^{p,q}(M)\otimes E)$$\par
+When $E$ is holomorphic vector bundle, we define an operator $\overline{\partial}_{E}$ as follows: On the open subset $U\subseteq M$, let $(s_{j})$ be a local holomorphic frame for $E$ on $U$, suppose $\sigma\in \mathcal{E}^{p,q}(M;E)$, then 
+$$\sigma|_{U}\triangleq \sigma^{j}\otimes s_{j}$$
+where $\sigma^{j}\in C^{\infty}(U;\mathbb{C})$, define 
+$$\overline{\partial}_{E}(\sigma|_{U}):=(\overline{\partial}\sigma^{j})\otimes s_{j}$$
+If $(\widetilde{s}_{j})$ is another local holomorphic frame for $E$ on $U$, then 
+$$\widetilde{s}_{k}\triangleq \tau^{j}_{k}s_{j}$$
+for some holomorphic functions $\tau^{j}_{k}\in \mathcal{O}(U)$. If we express $\sigma|_{U}$ w.r.t. $(\widetilde{s}_{j})$ as
+$$\sigma|_{U}\triangleq \widetilde{\sigma}^{k}\otimes \widetilde{s}_{k}$$
+then we get
+$$\widetilde{\sigma}^{k}\otimes \widetilde{s}_{k}=\widetilde{\sigma}^{k}\otimes (\tau^{j}_{k}s_{j})=(\tau^{j}_{k}\widetilde{\sigma}^{k})\otimes s_{j}$$
+which means that $\tau^{j}_{k}\widetilde{\sigma}^{k}=\sigma^{j}$, then we get
+$$(\overline{\partial}\sigma^{j})\otimes s_{j}=\left(\overline{\partial}(\tau^{j}_{k}\widetilde{\sigma}^{k})\right)\otimes s_{j}=\tau^{j}_{k}(\overline{\partial}\widetilde{\sigma}^{k})\otimes s_{j}=(\overline{\partial}\widetilde{\sigma}^{k})\otimes (\tau^{j}_{k}s_{j})=(\overline{\partial}\widetilde{\sigma}^{k})\otimes \widetilde{s}_{k}$$
+which means that $\overline{\partial}_{E}:\mathcal{E}^{p,q}(M;E)\rightarrow \mathcal{E}^{p,q+1}(M;E)$ is independent of the choice of the holomorphic local frame and hence is globally defined on $M$.\par
+We have the following important results about the operator $\overline{\partial}_{E}$.
+
+\Proposition{
+$M$ is a complex $n$-manifold and $E\rightarrow M$ is a holomorphic vector bundle. Then the operators 
+$$\overline{\partial}_{E}:\mathcal{E}^{p,q}(M;E)\longrightarrow \mathcal{E}^{p,q+1}(M;E)$$
+defined above satisfy the following properties:\par
+(1) If $\sigma\in \mathcal{E}^{0,0}(M;E)=\Gamma(E)$, then $\overline{\partial}_{E}\sigma=0\Longleftrightarrow \sigma\in \mathcal{O}(M;E)$;\par
+(2) For $\forall \alpha\in \mathcal{E}^{p,q}(M), \forall \beta\in \mathcal{E}^{k,l}(M;E)$, we have
+$$\overline{\partial}_{E}(\alpha \wedge \beta)=\overline{\partial}_{E}\alpha \wedge \beta+(-1)^{p+q}\alpha\wedge \overline{\partial}_{E}\beta$$\par
+(3) For $\forall \gamma\in \mathcal{E}^{p,q}(M;E^{*})$ and $\forall \beta\in \mathcal{E}^{k,l}(M;E)$, we have
+$$\overline{\partial}(\gamma\wedge \beta)=\overline{\partial}_{E^{*}}\gamma\wedge \beta+(-1)^{p+q}\alpha\wedge \overline{\partial}_{E}\beta$$\par
+(4) $\overline{\partial}_{E}\circ \overline{\partial}_{E}=0$.
+}
+Proof: (1) Let $(s_{i})$ be a local holomorphic frame for $E$ on $U\subseteq M$, let $\sigma\triangleq f^{j}\otimes s_{j}\in \Gamma(E)$, where $f^{j}\in C^{\infty}(M;\mathbb{C})$, then by the definition of $\overline{\partial}_{E}$, 
+$$\overline{\partial}_{E}(\sigma)=(\overline{\partial}f^{j})\otimes s_{j}$$
+since $(s_{i})$ is linearly independent, so $\overline{\partial}_{E}(\sigma)=0\Longleftrightarrow \overline{\partial}f^{j}=0~~(\forall j)\Longleftrightarrow f^{j}\in\mathcal{O}(U)\Longleftrightarrow \sigma\in \mathcal{O}(U;E)$. Since $U$ is arbirtary and $\overline{\partial}_{E}$ is globally defined, the conclusion holds;\par
+(2) Locally, express $\beta\in \mathcal{E}^{k,l}(M;E)$ as $\beta\triangleq \beta^{j}\otimes s_{j}$ for some $\beta^{j}\in C^{\infty}(U;\mathbb{C})$, we compute
+$$\overline{\partial}_{E}(\alpha\wedge \beta)=\overline{\partial}_{E}\left((\alpha\wedge \beta^{j})\otimes s_{j}\right)=(\overline{\partial}(\alpha\wedge \beta^{j}))\otimes s_{j}$$
+$$=(\overline{\partial}\alpha\wedge \beta^{j}+(-1)^{p+q}\alpha\wedge \overline{\partial}\beta^{j})\otimes s_{j}=\overline{\partial}\alpha\wedge \beta+(-1)^{p+q}\alpha\wedge \overline{\partial}_{E}\beta$$
+where the last equality is by the definition of wedge product on bundle-valued forms again;\par
+(3) Use the basis $(\varepsilon^{k})$ 
+for $E^{*}$ dual to $(s_{j})$ for $E$ and do the similar computational process in the proof in (2) $\checkmark$;\par
+(4) By the definition of $\overline{\partial}_{E}$ and use the fact that $\overline{\partial}\circ \overline{\partial}=0$.~$\square
+$
+
+\hspace*{\fill}
+
+The proposition above has shown that for a holomorphic vector bundle $E\rightarrow M$, $\overline{\partial}_{E}\circ \overline{\partial}_{E}=0$, hence we get a complex
+$$\xymatrix{
+0\ar[r]&\mathcal{E}^{p,0}(M;E)\ar[r]^{\overline{\partial}_{E}}\ar[r]&\dots\ar[r]^{\overline{\partial}_{E}}& \mathcal{E}^{p,q-1}(M;E)\ar[r]^{\overline{\partial}_{E}}&\mathcal{E}^{p,q}(M;E)\ar[r]^{\overline{\partial}_{E}}&\mathcal{E}^{p,q+1}(M;E)\ar[r]^{\overline{\partial}_{E}}&\dots
+}$$
+\Definition{
+Let $E\rightarrow M$ be a holomorphic vector bundle over the complex manifold $M$. The \textbf{Dolbeault cohomology groups with coefficients in $E$} is defined by
+$$H^{p,q}(M;E):=\frac{\ker \left\{ \overline{\partial}_{E}:\mathcal{E}^{p,q}(M;E)\rightarrow \mathcal{E}^{p,q+1}(M;E) \right\}}{{\rm Im}\left\{ \overline{\partial}_{E}:\mathcal{E}^{p,q-1}(M;E)\rightarrow \mathcal{E}^{p,q}(M;E)  \right\}}$$
+}
+
+\hspace*{\fill}
+
+Recall that we have known about the ordinary Poincare Lemma and the  $\overline{\partial}$-Poincare Lemma, which is stated as
+\Theorem{(1) (\textbf{Poincare Lemma}) Let $M$ be a smooth manifold, then for any point $p\in M$ there exists a neighborhood $U$ of $p$ such that every closed form on $U$ is exact.\par
+(2) (\textbf{$\overline{\partial}$-Poincare Lemma}) Let $M$ be a complex $n$-manifold and $\omega\in \mathcal{E}^{p,q}(M)$ with $q\geq 1$ such that $\overline{\partial}\omega=0$, then for $\forall p\in M$ there exists a neighborhood $U$ of $p$ and $\eta\in \mathcal{E}^{p,q-1}(U)$ such that $\overline{\partial}\eta=\omega|_{U}$.
+}
+
+This theorem results in the following lemma
+\Lemma{(\textbf{Local $\partial\overline{\partial}$-Lemma}) Let $M$ be a complex $n$-manifold and $\theta\in \mathcal{E}^{p,q}(M)$ with $p,q\geq 1$ such that $d\theta=0$. Then for $\forall p\in M$, there exists a neighborhood $U$ of $p$ and $\alpha\in \mathcal{E}^{p-1,q-1}(U)$ such that $\theta|_{U}=\sqrt{-1}\partial\overline{\partial}\alpha$.
+}
+Proof: By the ordinary Poincare Lemma, there exists a neighborhood $U$ of $p$ and $\eta\in \mathcal{E}^{p+q-1}(U)$ such that
+$$d\eta=\theta|_{U}$$
+just by applying ordinary Poincare Lemma to the complex-valued form in its real and imaginary parts. w.l.o.g., we may assume (since the other parts do not contribute to the $(p,q)$-part of $d\eta$)
+$$\eta\triangleq \eta^{p-1,q}+\eta^{p,q-1}\in \mathcal{E}^{p-1,q}(U)\oplus \mathcal{E}^{p,q-1}(U)$$
+By the fact that $d=\overline{\partial}+\partial$ and $d\eta=\theta|_{U}\in \mathcal{E}^{p,q}(U)$, we get
+$$d\eta=(\partial+\overline{\partial})(\eta^{p-1,q}+\eta^{p,q-1})=\partial(\eta^{p-1,q})+\overline{\partial}(\eta^{p-1,q})+\partial(\eta^{p,q-1})+\overline{\partial}(\eta^{p,q-1})\in \mathcal{E}^{p,q}(U)$$
+this means that
+$$\overline{\partial}(\eta^{p-1,q})=0,~~\partial(\eta^{p,q-1})=0,~~\partial(\eta^{p-1,q})+\overline{\partial}(\eta^{p,q-1})=\theta|_{U}$$
+Shrinking the neighborhood $U$ as small as possible, by the $\overline{\partial}$-Poincare Lemma, there exists $\beta\in \mathcal{E}^{p-1,q-1}(U)$ such that $\overline{\partial}\beta=\eta^{p-1,q}$. Note that $\overline{\partial(\eta^{p,q-1})}=\overline{\partial}(\overline{\eta^{p,q-1}})=0$ and $\overline{\eta^{p,q-1}}\in\mathcal{E}^{q-1,p}(U)$, so there exists $\gamma\in \mathcal{E}^{q-1,p-1}(U)$ such that $\overline{\partial}\gamma=\overline{\eta^{p,q-1}}$.\par
+Now we define
+$$\alpha:=\sqrt{-1}\overline{\gamma}-\sqrt{-1}\beta\in \mathcal{E}^{p-1,q-1}(U)$$
+then we compute
+$$\sqrt{-1}\partial\overline{\partial}\alpha=\sqrt{-1}\partial\overline{\partial}(\sqrt{-1}\overline{\gamma})-\sqrt{-1}\partial\overline{\partial}(\sqrt{-1}\beta)$$
+$$=\overline{\partial}\partial(\overline{\gamma})+\partial\overline{\partial}(\beta)=\overline{\partial}(\overline{\overline{\partial}\gamma})+\partial(\overline{\partial}\beta)$$
+$$=\overline{\partial}\eta^{p,q-1}+\partial\eta^{p-1,q}=\theta|_{U}$$
+which is our desired result.~$\square$
+
+\textbf{Remark}: Note that through the proof above, we can know that if $\theta\in \Omega^{p,p}(M)$, i.e., $\theta$ is a real $(p,p)$-form, then $\eta$ can be chosen to be real, i.e., $\overline{\eta^{p,q-1}}=\eta^{p,q-1}$, then we can take $\gamma=\beta$ as above and hence $\alpha=\sqrt{-1}\overline{\beta}-\sqrt{-1} \beta$ is a real $(p-1,p-1)$ form.
+
+\hspace*{\fill}
+
+Applying the $\overline{\partial}$-Poincare Lemma to our previous defined operator $\overline{\partial}_{E}:\mathcal{E}^{p,q}(M;E)\rightarrow \mathcal{E}^{p,q+1}(M;E)$, we have 
+\Proposition{
+Let $E\rightarrow M$ be a holomorphic vector bundle over the complex manifold $M$, let $\overline{\partial}_{E}$ be the operator described in the Proposition 2. If $\alpha\in \mathcal{E}^{p,q}(M;E)$ satisfies $\overline{\partial}_{E}\alpha=0$, then for $\forall p\in M$, there exists a neighborhood $U$ of $p$ and $\beta\in \mathcal{E}^{p,q-1}(U;E)$ such that $\overline{\partial}_{E}\beta=\alpha$.
+}
+Proof: By the definition of $\overline{\partial}_{E}$ and $\overline{\partial}$-Poincare Lemma.~$\square$
+
+
+\section{Chern Connection}
+
+\subsection{Connections}
+
+\underline{\textbf{Recall}}: Recall that in Riemannian geometry, we have defined the connection on smooth complex vector bundles: Let $E\rightarrow M$ be a smooth complex vector bundle of rank $m$. Then a connection on $E$ is a map
+$$\nabla: \Gamma(TM)\times \Gamma(E)\longrightarrow \Gamma(E)$$
+$$(x,\sigma)\mapsto \nabla_{X}\sigma$$
+such that it is $C^{\infty}(M)$-linear in $X$ and $\mathbb{C}$-linear in $\sigma$ and satisfying the product rule
+$$\nabla_{X}(f\sigma)=X(f)\sigma+f\nabla_{X}\sigma$$
+for any $f\in C^{\infty}(M;\mathbb{C})$. Hence this also defines
+$$\nabla: \Gamma(TM)\longrightarrow \Gamma(T^{*}M\otimes E)$$
+where it can be noted that $T^{*}M\otimes E\cong {\rm Hom}(E,TM)$ and $(\nabla\sigma)(X):=\nabla_{X}\sigma$.\par
+We extend the connection by complex linearity to accept complex vector fields, i.e., for $\forall Z\triangleq X+\sqrt{-1}Y\in \Gamma(T_{\mathbb{C}}M)$, where $X,Y\in \Gamma(TM)$, we set
+$$\nabla_{Z}\sigma:=\nabla_{X}\sigma+\sqrt{-1}\nabla_{Y}\sigma$$
+therefore we get $\nabla:\Gamma(T_{\mathbb{C}}M)\times \Gamma(E)\rightarrow \Gamma(E)$.
+
+\hspace*{\fill}
+
+\underline{\textbf{Recall}}: Suppose $E\rightarrow M$ is a given smooth complex vector bundle of rank $m$ over the smooth manifold $M$, $\nabla$ is any connection on $E$. The \textbf{connection forms} $\theta^{k}_{j}\in \mathcal{E}^{1}(M)$ are given by 
+$$\nabla_{X}(s_{j})=\theta^{k}_{j}(X)\otimes s_{k}$$
+where $(s_{j})$ is a smooth local frame of $E$ and the connection matrix $\theta:=(\theta^{k}_{j})$.\par
+Now we can see how do the connection forms behave under different local smooth frames: Let $(\widetilde{s}_{j})$ be another local smooth frame of $E$, when $(s_{j})$ and $(\widetilde{s}_{j})$ overlap, there exists $\tau=(\tau^{j}_{k})\in GL(m;\mathbb{C})$ such that
+$$\widetilde{s}_{k}=\tau^{j}_{k}s_{j}$$
+then we compute
+$$\nabla(\widetilde{s}_{k})=\nabla(\tau^{j}_{k}s_{j})=d\tau^{j}_{k}\otimes s_{j}+\tau^{j}_{k}\nabla s_{j}$$
+$$=d\tau^{j}_{k}\otimes (\tau^{-1})^{p}_{j}\widetilde{s}_{p}+\tau^{j}_{k}\theta^{l}_{j}\otimes (\tau^{-1})^{p}_{l}\widetilde{s}_{p}$$
+$$=(\tau^{-1})^{p}_{j}d\tau^{j}_{k}\otimes \widetilde{s}_{p}+(\tau^{-1})^{p}_{l}\tau^{j}_{k}\theta^{l}_{j}\otimes \widetilde{s}_{p}$$
+$$=\left[(\tau^{-1})^{p}_{j}d\tau^{j}_{k}+(\tau^{-1})^{p}_{l}\tau^{j}_{k}\theta^{l}_{j} \right]\otimes \widetilde{s}_{p}$$
+which means that
+$$\widetilde{\theta}^{p}_{k}=(\tau^{-1})^{p}_{j}d\tau^{j}_{k}+(\tau^{-1})^{p}_{l}\tau^{j}_{k}\theta^{l}_{j}$$
+if we write this in matrix notation, we get
+\Proposition{ The transformation relation of the connection matrix under different local smooth frame is given by 
+$$\widetilde{\theta}=\tau^{-1}\cdot d\tau+\tau^{-1}\theta\tau$$
+where $\tau\in GL(m;\mathbb{C})$ is the transition matrix of local frames.
+}
+
+\hspace*{\fill}
+
+If the smooth complex vector bundle $E\rightarrow M$ over the smooth maifold $M$ is endowed with a Hermitian fiber metric, then the connection $\nabla$ is called \textbf{compatible with the metric} if 
+$$X\langle \sigma,\tau\rangle=\langle \nabla_{X}\sigma,\tau\rangle+\langle \sigma,\nabla_{X}\tau\rangle~~~\forall X\in \Gamma(TM), \forall \sigma,\tau\in\Gamma(E)$$
+note that the Hermitian inner product is conjugate-linear in the second argument, so the condition above gives
+$$Z\langle \sigma,\tau\rangle=\langle \nabla_{Z}\sigma,\tau\rangle+\langle \sigma,\nabla_{\overline{Z}}\tau\rangle~~~\forall Z\in \Gamma(T_{\mathbb{C}}M)),\forall \sigma,\tau\in \Gamma(E)$$
+
+\Proposition{
+Let $E\rightarrow M$ be a smooth complex vector bundle endowed with a Hermitian fiber metric, $\nabla$ is any connection on $E$. Let $(s_{j})$ be an orthonormal local frame for $E$, then the connection matrix w.r.t. $(s_{j})$ is skew-Hermitian, i.e.,
+$$\theta=-\overline{\theta}^{T}$$
+}
+Proof: This is an easy computation.~$\square$
+
+\subsection{Curvature}
+
+\underline{\textbf{Recall}}: Recall that for a smooth complex vector bundle $E\rightarrow M$ over the smooth manifold $M$. Given a connection $\nabla:\Gamma(E)\rightarrow \Gamma(T^{*}_{\mathbb{C}}M\otimes E)$ on $E$, its curvature $R$ is defined by
+$$R:\Gamma(T_{\mathbb{C}}M)\times \Gamma(T_{\mathbb{C}}M)\times \Gamma(E)\rightarrow \Gamma(E)$$
+$R(X,Y)\sigma:=\nabla_{X}\nabla_{Y}\sigma-\nabla_{Y}\nabla_{X}\sigma-\nabla_{[X,Y]}\sigma$, which is $C^{\infty}(M;\mathbb{C})$-linear in all three arguments. Hence 
+$$R\in \Gamma(T^{*}_{\mathbb{C}}M\otimes T^{*}_{\mathbb{C}}M\otimes E^{*}\otimes E)$$
+note that $E^{*}\otimes E\cong {\rm End}(E)$ and $R$ is clearly antisymmetric in $X$ and $Y$, thus $$R\in \Gamma(\wedge^{2}_{\mathbb{C}}(M)\otimes {\rm End}(E))=\mathcal{E}^{2}(M;{\rm End}(E))$$
+the \textbf{curvature forms} $\Theta^{l}_{j}\in \mathcal{E}^{2}(M)$ of $\nabla$ are given by
+$$R(X,Y)s_{j}=\Theta^{l}_{j}(X,Y)s_{l}$$
+where $(s_{j})$ is a local frame for $E$, then we compute
+$$R(X,Y)s_{j}=\nabla_{X}(\nabla_{Y}s_{j})-\nabla_{Y}(\nabla_{X}s_{j})-\nabla_{[X,Y]}s_{j}$$
+$$=\nabla_{X}(\theta^{k}_{j}(Y)s_{k})-\nabla_{Y}(\theta^{k}_{j}(X)s_{k})-\theta^{k}_{j}([X,Y])s_{k}$$
+$$=\left( X(\theta^{k}_{j}(Y))s_{k}+\theta^{k}_{j}(Y)\nabla_{X}s_{k} \right)-\left( 
+Y(\theta^{k}_{j}(X)s_{k}+\theta^{k}_{j}(X)\nabla_{Y}s_{k}) \right)-\theta^{k}_{j}([X,Y])s_{k}$$
+note that
+$$d\theta^{k}_{j}(X,Y)=X(\theta^{k}_{j}(Y))-Y(\theta^{k}_{j}(X))-\theta^{k}_{j}([X,Y])$$
+so we get
+$$R(X,Y)s_{j}=\left (d\theta^{l}_{j}(X,Y)+(\theta^{l}_{k}\wedge\theta^{k}_{j})(X,Y) \right)s_{l}$$
+which means we have the following proposition
+\Proposition{
+The relation between conncection forms and curvature forms is given by
+$$\Theta^{l}_{j}=d\theta^{l}_{j}+\theta^{l}_{k}\wedge \theta^{k}_{j}$$
+in matrix notation, this is
+$$\Theta=d\theta+\theta\wedge\theta$$
+}
+
+Let $(\widetilde{s}_{j})$ be another local sommth frame for $E$, when $(\widetilde{s}_{j})$ and $(s_{j})$ overlap, we can write
+$$\widetilde{s}_{k}=\tau^{j}_{k}s_{k}$$
+with $\tau=(\tau^{j}_{k})\in GL(m;\mathbb{C})$, then by linear algebra it's an easy computation to know that
+\Proposition{ The transformation relation of the curvature matrix under different local smooth frame is given by 
+$$\widetilde{\Theta}=\tau^{-1}\Theta\tau$$
+where $\tau\in GL(m;\mathbb{C})$ is the transition matrix of local frames.
+}
+
+\hspace*{\fill} 
+
+More over, we have
+
+\Proposition{(\textbf{Bianchi Identity}) $d\Theta=\Theta\wedge \theta-\theta\wedge \Theta$
+}
+Proof: Since $\Theta=d\theta+\theta\wedge \theta$, so
+$$d\Theta=d\theta\wedge\theta-\theta\wedge d\theta$$
+note that 
+$$\Theta\wedge\theta=(d\theta+\theta\wedge\theta)\wedge\theta=d\theta\wedge\theta+\theta\wedge\theta\wedge\theta$$
+$$\theta\wedge \Theta=\theta\wedge(d\theta+\theta\wedge\theta)=\theta\wedge d\theta+\theta\wedge\theta\wedge\theta$$
+hence $d\Theta=\Theta\wedge\theta-\theta\wedge\Theta$.~$\square$
+
+
+
+
+\subsection{Chern Connection}
+
+Now, we turn to case of holomorphic vector bundles over complex manifolds. For comparision, recall that in the case of Riemannain manifolds, there are many connections on the tangent bundle that are compatible with the Riemannian metric, but there is a unique connection, called the \textbf{Levi-Civita connection}, that satisfies the additional condition of being \textbf{torision-free}, i.e., $\nabla_{X}Y-\nabla_{Y}X-[X,Y]=0$ for all $X,Y\in \Gamma(TM)$. However, the torision-free condition makes sense only on the tangent bundle. So, in order to get a unique connection on holomorphic vector bundles, we need another condition, which is stated as below.
+
+\hspace*{\fill}
+
+Let $E\rightarrow M$ be a holomorphic vector bundle over the complex maniold $M$. Since
+$$T^{*}_{\mathbb{C}}M=\wedge^{1}_{\mathbb{C}}(M)=T^{*(1,0)}M\oplus T^{*(0,1)}M=\wedge^{1,0}(M)\oplus \wedge^{0,1}(M)$$
+so for any connection $\nabla: \Gamma(E)\rightarrow \Gamma(T^{*}_{\mathbb{C}}M\otimes E)$ on $E$ can be decomposed as 
+$$\nabla\triangleq \nabla^{(1,0)}+\nabla^{(0,1)}$$
+where for $\forall \sigma\in \Gamma(E)$, $\nabla^{(1,0)} \sigma\in \Gamma(\wedge^{1,0}(M)\otimes E)$ and $\nabla^{(0,1)} \sigma\in \Gamma(\wedge^{0,1}(M)\otimes E)$.
+
+\Definition{
+Let $E\rightarrow M$ be a holomorphic vector bundle over the complex manifold $M$ and $\nabla$ is a connection on $E$. Then $\nabla$ is called \textbf{compatible with the holomorphic structure} if $\nabla^{(0,1)}=\overline{\partial}_{E}$, where $\overline{\partial}_{E}$ is described in Proposition 2 above.
+}
+
+We have the following characterization of the compatibility with the holomorphic structure
+
+\Theorem{
+Let $E\rightarrow M$ be a holomorphic vector bundle over the complex manifold $M$ and $\nabla$ is a connection on $E$. Then TFAE (the following are equvialent):\par
+(1) $\nabla^{(0,1)}=\overline{\partial}_{E}$;\par
+(2) For $\forall \sigma\in\mathcal{O}(E)$ and $\forall \overline{Z}\in \Gamma(T^{(0,1)}M)$, we have
+$$\nabla_{\overline{Z}}\sigma=0$$\par
+(3) For any holomorphic local frame $(s_{j})$ for $E$, we have
+$$\nabla s_{j}=\theta^{k}_{j}\otimes s_{k}$$
+where $\theta^{k}_{j}\in \mathcal{E}^{1,0}(M)$.
+}
+Proof: We just need to prove locally since this is a local issue.\par 
+(1)$\Leftrightarrow$(3):  Let $(s_{j})$ be a local holomorphic frame for $E$ on $U$, then for any $\sigma\triangleq \sigma^{j}s_{j}\in \Gamma(U;E)$ with $\sigma^{j}\in C^{\infty}(U;\mathbb{C})$, 
+$$\nabla \sigma=\nabla(\sigma^{j}s_{j})=d\sigma^{j}\otimes s_{j}+\sigma^{j}\theta^{k}_{j}\otimes s_{k}$$
+by the definition of $\nabla^{(0,1)}$, we get
+$$\nabla^{(0,1)}\sigma=\overline{\partial}\sigma^{j}\otimes s_{j}+\sigma^{j}(\theta^{k}_{j})^{(0,1)}\otimes s_{k}$$
+note that by the definition of $\overline{\partial}_{E}$, 
+$$\overline{\partial}_{E}(\sigma^{j}\otimes s_{j})=(\overline{\partial}\sigma^{j})\otimes s_{j}$$
+hence we get
+$$\nabla^{(0,1)}=\overline{\partial}_{E}\Leftrightarrow (\theta^{k}_{j})^{(0,1)}=0\Leftrightarrow \theta^{k}_{j}\in \mathcal{E}^{1,0}(M);$$\par
+(2)$\Rightarrow$(3): For any $\overline{Z}\in \Gamma(T^{(0,1)}U)$, then
+$$\nabla_{\overline{Z}}s_{j}=\theta^{k}_{j}(\overline{Z})s_{k}=0$$
+where $(s_{j})$ is any holomorphic local frame for $E$. Hence 
+$$\theta^{k}_{j}|_{\Gamma(T^{(0,1)}U)}\equiv 0$$
+which means that $\theta^{k}_{j}\in \mathcal{E}^{1,0}(U)$;\par
+(3)$\Rightarrow$(2): Let $(s_{j})$ be any loccal holomorphic frame for $E$, then for any $\sigma\triangleq \sigma^{j}s_{j}\in \mathcal{O}(U;E)$, where $\sigma^{j}\in \mathcal{O}(U)$, for any $\overline{Z}\in \Gamma(T^{(0,1)}U)$, we compute
+$$\nabla_{\overline{Z}}(\sigma^{j}s_{j})=\overline{Z}(\sigma^{j})s_{j}+\theta^{k}_{j}(\overline{Z})s_{k}=0+0=0$$
+since $\theta^{k}_{j}\in \mathcal{E}^{1,0}(U)$.~$\square$
+
+\hspace*{\fill}
+
+
+Now, we have the fundamental result about the connections on Hermitian holomorphic vector bundle.
+\Theorem{(\textbf{Chern Connection Theorem}) Let $E\rightarrow M$ be an Hermitian holomorphic vector bundle, i.e., $E$ is endowed with a Hermitian fiber metric. Then there exists a unique connection on $E$ which is both compatible with the metric and compatible with the holomorphic structure.
+}
+Proof: We first prove that if it exists then it must be unique:\par
+Let $(s_{j})$ be a local holomorphic frame for $E$ on $U\subseteq M$ and $\nabla$ be such connection. Since $\nabla^{(0,1)}=\overline{\partial}_{E}$, thus
+$$\nabla s_{j}=\theta^{k}_{j}\otimes s_{k}$$
+with $\theta^{k}_{j}\in \mathcal{E}^{1,0}(U)$. Denote $h_{ij}:=\langle s_{i},s_{j}\rangle$ (here $\langle \cdot,\cdot \rangle$ denotes the Hermitian fiber metric), then for $\forall Z\in \Gamma(T^{(1,0)}M)$ we compute
+$$Z(h_{jk})=Z\langle s_{i},s_{k}\rangle=\langle \nabla_{Z}s_{i},s_{k}\rangle+\langle s_{i},\nabla_{\overline{Z}}s_{k}\rangle$$
+by Theorem 2, we know that $\nabla_{\overline{Z}}s_{k}=0$, so we get
+$$Z(h_{jk})=\langle \theta^{l}_{j}(Z)s_{l},s_{k}\rangle=\theta^{l}_{j}(Z)h_{lk}$$
+denote
+$$(h^{ij}):=(h_{ij})^{-1}$$
+then we have
+$$h^{km}Z(h_{jk})=h^{km}\theta^{l}_{j}(Z)h_{lk}=\theta^{l}_{j}(Z)\delta^{m}_{l}=\theta^{m}_{j}(Z)$$
+i.e.,
+$\theta^{m}_{j}(Z)=h^{km}dh_{jk}(Z)$ for any $Z\in\Gamma(T^{(1,0)}M)$, note that $\theta^{m}_{j}\in \mathcal{E}^{1,0}(M)$, so we get
+\begin{equation}
+    \theta^{m}_{j}=h^{km}(\partial h_{jk})
+\end{equation}
+
+Now, for the existence of such connection, we define $\nabla$ by equation (1) in terms of each local holomorphic frame. It's an easy computaion to show that such defined $\nabla$ is compatible with the metric and compatible with the holomorphic structure.\par
+The uniqueness guarantees the definitions agree whenever the local holomorphic frames overlap. So $\nabla$ is globally defined.~$\square$
+
+\hspace*{\fill}
+
+\Definition{ The connection in the Theorem above is called the \textbf{Chern connection}.
+}
+
+\hspace*{\fill}
+
+The following proposition tells us that the curvature forms of the Chern connection are $(1,1)$-forms.
+\Proposition{
+Let $E\rightarrow M$ be a Hermitian holomorphic vector bundle over the complex manifold $M$, then the curvature form $\Theta^{k}_{j}$ of the Chern connection is $\Theta^{k}_{j}\in \mathcal{E}^{1,1}(M)$.
+}
+Proof: By proposition 6, we know that
+$$\Theta^{m}_{j}=\partial\theta^{m}_{j}+\overline{\partial}\theta^{m}_{j}+\theta^{m}_{k}\wedge\theta^{k}_{j}$$
+by the equation (1) above, we compute
+$$\partial\theta^{m}_{j}+\theta^{m}_{k}\wedge \theta^{k}_{j}=\partial \left(h^{km}(\partial h_{jk}) \right)+\left( h^{pm}(\partial h_{kp}) \right)\wedge \left( h^{qk}(\partial h_{jq}) \right)$$
+$$=(\partial h^{km})\wedge (\partial h_{jk})+h^{pm}h^{qk}(\partial h_{kp})\wedge (\partial h_{jq})$$
+note that
+$$h^{kp}h_{pl}=\delta^{k}_{l}$$
+hence 
+$$0=\partial(h^{kp}h_{pl})=h_{pl}(\partial h^{kp})+h^{kp}(\partial h_{pl})$$
+so this yields
+$$-h^{lm}h_{pl}(\partial h^{kp})=-\partial h^{km}=-h^{lm}h^{kp}(\partial h_{pl})$$
+insert this into the computation above, we can get
+$$\partial\theta^{m}_{j}+\theta^{m}_{k}\wedge \theta^{k}_{j}=(\partial h^{km})\wedge (\partial h_{jk})+h^{pm}h^{qk}(\partial h_{kp})\wedge (\partial h_{jq})=0$$
+thus we have
+$$\Theta^{m}_{j}=\overline{\partial}\theta^{m}_{j}\in \mathcal{E}^{1,1}(M)$$
+since by Theorem 2 we know that $\theta^{m}_{j}\in \mathcal{E}^{1,0}(M)$. In matrix notation this is $\Theta=\overline{\partial}\theta$.~$\square$
+
+
+
+
+
+
+
+
+\end{document}
