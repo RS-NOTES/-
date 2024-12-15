@@ -1,0 +1,181 @@
+\documentclass[a4paper,12pt,UTF8]{ctexart}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage[arrow,matrix]{xy}
+\usepackage{amsmath,amssymb,amscd,bm,bbm,amsthm,mathrsfs}
+\usepackage{amsmath,amscd}
+\usepackage{amsfonts,amssymb}
+\usepackage{xypic}
+\usepackage{indentfirst}
+\usepackage{diagbox}
+\usepackage{graphicx}
+\usepackage{tcolorbox}
+\usepackage{color}
+\usepackage{geometry}
+\usepackage[normalem]{ulem}
+\geometry{left=1.5cm,right=1.5cm,top=2cm,bottom=1.5cm}
+
+
+\def\d{\textup{d}}
+
+\theoremstyle{definition}
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lem}{Lemma}[section]
+\newtheorem{prop}{Proposition}[section]
+\newtheorem{cor}{Corollary}[section]
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}[section]
+\newtheorem{exmp}{Example}[section]
+\newtheorem*{ack}{致谢}
+
+\theoremstyle{Remark}
+\newtheorem{rem}{Remark}[section]
+
+\renewcommand{\qedsymbol}{$\squre$}
+\renewcommand\baselinestretch{1.25}
+
+\tcbuselibrary{skins}
+
+
+
+\NewTotalTColorBox[auto counter]{\Definition}{ +m }{ 
+	notitle,
+	colback=green!20!white,
+	frame hidden,
+	boxrule=0pt,
+	enhanced,
+	sharp corners,
+	borderline west={4pt}{0pt}{green!80!black},
+}{
+	\textcolor{green!60!black}{
+		\sffamily
+		\textbf{Definition~\thetcbcounter.}%
+	}%
+	#1
+}
+
+\NewTotalTColorBox[auto counter]{\Lemma}{ +m }{ 
+	notitle,
+	colback=red!10!white,
+	frame hidden,
+	boxrule=0pt,
+	enhanced,
+	sharp corners,
+	borderline west={4pt}{0pt}{red!100!black},
+}{
+	\textcolor{red!90!black}{
+		\sffamily
+		\textbf{Lemma~\thetcbcounter.}%
+	}%
+	#1
+}
+
+\NewTotalTColorBox[auto counter]{\Example}{ +m }{ 
+	notitle,
+	colback=black!5!white,
+	frame hidden,
+	boxrule=0pt,
+	enhanced,
+	sharp corners,
+	borderline west={4pt}{0pt}{black!50!black},
+}{
+	\textcolor{black!50!black}{
+		\sffamily
+		\textbf{Example~\thetcbcounter.}%
+	}%
+	#1
+}
+
+\NewTotalTColorBox[auto counter]{\Proposition}{ +m }{ 
+	notitle,
+	colback=blue!5!white,
+	frame hidden,
+	boxrule=0pt,
+	enhanced,
+	sharp corners,
+	borderline west={4pt}{0pt}{blue!80!black},
+}{
+	\textcolor{blue!80!black}{
+		\sffamily
+		\textbf{Proposition~\thetcbcounter.}%
+	}%
+	#1
+}
+
+\NewTotalTColorBox[auto counter]{\Corollary}{ +m }{ 
+	notitle,
+	colback=blue!5!white,
+	frame hidden,
+	boxrule=0pt,
+	enhanced,
+	sharp corners,
+	borderline west={4pt}{0pt}{blue!50!black},
+}{
+	\textcolor{blue!50!black}{
+		\sffamily
+		\textbf{Corollary~\thetcbcounter.}%
+	}%
+	#1
+}
+
+\NewTotalTColorBox[auto counter]{\Theorem}{ +m }{ 
+	notitle,
+	colback=red!10!white,
+	frame hidden,
+	boxrule=0pt,
+	enhanced,
+	sharp corners,
+	borderline west={4pt}{0pt}{red!100!black},
+}{
+	\textcolor{red!90!black}{
+		\sffamily
+		\textbf{Theorem~\thetcbcounter.}%
+	}%
+	#1
+}
+
+
+
+
+\begin{document}
+
+\section{Title}
+
+\subsection{Subtitle}
+
+
+\Definition{
+This is a Definition
+}
+
+\Proposition{
+This is a proposition
+}
+
+Proof: Write down  the proof.~$\blacksquare$
+
+\Lemma{
+This is a Lemma
+}
+
+\Theorem{
+This is a Theorem
+}
+
+Proof: Write down  the proof.~$\blacksquare$
+
+\hspace*{\fill}
+
+\textcolor{blue}{\textbf{\underline{Remark}}}: Write your remark.
+
+\Corollary{
+This is a corollary
+}
+
+
+
+
+
+\end{document}
